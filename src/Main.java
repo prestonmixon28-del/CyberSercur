@@ -1,10 +1,15 @@
 public class Main {
     public static void main(String[] args) {
 
-        LegacyFirewall oldFirewall = new LegacyFirewall();
+        AuthenticationService authService = new AuthenticationService();
+        AuthorizationService authzService = new AuthorizationService();
+        AuditService auditService = new AuditService();
+        SessionService sessionService = new SessionService();
 
-        FirewallAdapter log = new FirewallAdapter(oldFirewall);
-        log.logEvent("Test event");
-        log.setSeverity("3");
+        String username = "testuser";
+        authService.authenticate(username);
+        authzService.authorize(username);
+        auditService.record("User " + username + " accessed the system");
+        sessionService.startSession(username);
 }
 }
